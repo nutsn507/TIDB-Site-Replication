@@ -91,42 +91,12 @@ Run the following query on the source cluster:
 BACKUP DATABASE * TO 's3://backuptidb?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
 ```
 
-### S3 Details
+#### S3 Details
 
 - **Bucket Name**: `backuptidb`
 - **Access Key**: `UgL2VKb5AOeIWw5S`
 - **Secret Key**: `cNuXvK2762qcHWWetubRHuhco0CR1AqZ`
 - **Endpoint**: `http://10.111.0.167`
-
-### Explanation of the S3 URL
-
-The `s3://backuptidb` URL specifies the destination for the backup files. It includes:
-- **Bucket Name**: `backuptidb` is the S3-compatible storage bucket where backups will be saved.
-- **Access and Secret Keys**: Used to authenticate with the S3-compatible storage.
-- **Endpoint**: `http://10.111.0.167` is the server address for the storage.
-- **Path Style**: `force-path-style=true` ensures compatibility with MinIO by enforcing path-style URLs.
-
-### Optional: Specify Backup Folder
-
-To organize backups by folders, you can specify a folder path in the S3 URL. For example, to back up all databases to a folder named `full_backup`:
-
-```sql
-BACKUP DATABASE * TO 's3://backuptidb/full_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
-
-### Backup a Specific Database
-
-To back up a specific database (e.g., `example_db`):
-
-```sql
-BACKUP DATABASE example_db TO 's3://backuptidb/example_db_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
-
-To specify a folder for a database backup:
-
-```sql
-BACKUP DATABASE example_db TO 's3://backuptidb/specific_folder/example_db_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
 
 ## Step 5: Restore All Databases to the Destination Cluster
 
@@ -138,36 +108,6 @@ Run the following query on the destination cluster:
 
 ```sql
 RESTORE DATABASE * FROM 's3://backuptidb?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
-
-### Explanation of the S3 URL
-
-The `s3://backuptidb` URL specifies the source of the backup files. It includes:
-- **Bucket Name**: `backuptidb` is the S3-compatible storage bucket where the backup is stored.
-- **Access and Secret Keys**: Used to authenticate with the S3-compatible storage.
-- **Endpoint**: `http://10.111.0.167` is the server address for the storage.
-- **Path Style**: `force-path-style=true` ensures compatibility with MinIO by enforcing path-style URLs.
-
-### Optional: Restore from a Specific Folder
-
-To restore from a specific folder (e.g., `full_backup`):
-
-```sql
-RESTORE DATABASE * FROM 's3://backuptidb/full_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
-
-### Restore a Specific Database
-
-To restore a specific database (e.g., `example_db`) from its backup:
-
-```sql
-RESTORE DATABASE example_db FROM 's3://backuptidb/example_db_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
-```
-
-To restore from a specific folder for a database backup:
-
-```sql
-RESTORE DATABASE example_db FROM 's3://backuptidb/specific_folder/example_db_backup?access-key=UgL2VKb5AOeIWw5S&secret-access-key=cNuXvK2762qcHWWetubRHuhco0CR1AqZ&endpoint=http://10.111.0.167&force-path-style=true';
 ```
 
 ## Step 6: Create a Changefeed for Incremental Replication
